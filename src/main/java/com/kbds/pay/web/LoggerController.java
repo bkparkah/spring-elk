@@ -28,14 +28,18 @@ public class LoggerController {
                 });
     }
 
-    @PostMapping("/logging")
-    public void loggingMessage(@RequestParam("message") String message) {
-        logger.info(message);
+    @PostMapping("/errorLogging")
+    public void loggingError(@RequestParam("message") String message) {
         String a = null;
         try {
             a.substring(1);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
+    }
+
+    @PostMapping("/logging")
+    public void loggingMessage(@RequestParam("message") String message) {
+        logger.info(message);
     }
 }
