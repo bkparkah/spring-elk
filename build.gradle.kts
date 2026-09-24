@@ -15,6 +15,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("software.amazon.awssdk:s3:2.20.0")
 
     implementation("jakarta.json:jakarta.json-api:2.0.1")
 

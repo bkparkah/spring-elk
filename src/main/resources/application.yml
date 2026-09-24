@@ -1,15 +1,15 @@
 server:
   port: 8080
 
-elastic-search:
-  host: localhost
-  port: 9200
-  api-key:
+#elastic-search:
+#  host: localhost
+#  port: 9200
+#  api-key:
 
-kafka:
-  bootstrap:
-    servers: localhost:9092
-  key:
-    serializer: org.apache.kafka.common.serialization.StringSerializer
-  value:
-    serializer: org.apache.kafka.common.serialization.StringSerializer
+#kafka:
+#  bootstrap:
+#    servers: localhost:9092
+#  key:
+#    serializer: org.apache.kafka.common.serialization.StringSerializer
+#  value:
+#    serializer: org.apache.kafka.common.serialization.StringSerializer

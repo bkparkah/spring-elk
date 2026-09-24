@@ -11,6 +11,7 @@ import org.apache.http.message.BasicHeader;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class EsClientConfig {
 
     @Bean
+    @ConditionalOnProperty("elastic-search.host")
     public static ElasticsearchClient getEsClientFactory(@Value("${elastic-search.host}") String host
             , @Value("${elastic-search.port}") int port
             , @Value("${elastic-search.port}") String apiKey) {

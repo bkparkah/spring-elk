@@ -1,7 +1,9 @@
 package com.kbds.pay.web;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import com.kbds.pay.service.EsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/es/search")
+@ConditionalOnBean(ElasticsearchClient.class)
 public class EsSearchController {
     @Autowired
     private EsService esService;
