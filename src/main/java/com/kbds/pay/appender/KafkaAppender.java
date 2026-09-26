@@ -28,7 +28,7 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent>  {
         messageMap.put("message", eventObject.getFormattedMessage());
         try {
             producer.send(new ProducerRecord<>(topic, objectMapper.writeValueAsString(messageMap)));
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -47,6 +47,8 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent>  {
         props.put("bootstrap.servers", bootstrapServers );
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer" );
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer" );
+        props.put("acks", "all");
+        System.out.println("Starting Kafka Appender");
         producer = new KafkaProducer<String, String>(props);
         super.start();
     }

@@ -19,9 +19,12 @@
         <bootstrapServers>localhost:9092</bootstrapServers>
     </appender>
 
+    <logger name="kafka-logger" level="INFO" additivity="false">
+        <appender-ref ref="KAFKA" />
+    </logger>
+
     <!-- Root Logger -->
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
-        <appender-ref ref="KAFKA" />
     </root>
 </configuration>
