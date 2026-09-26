@@ -3,7 +3,7 @@
     <!-- Include Spring Boot defaults -->
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [${hostname}] %-5level [%C.%M:%line] - %msg"/>
-    <property name="KAFKA_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [${hostname}] %-5level [%C.%M:%line] - %msg"/>
+    <property name="KAFKA_LOG_PATTERN" value="%msg"/>
 
     <!-- Console Appender -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -13,44 +13,15 @@
         </encoder>
     </appender>
 
-<!--    <appender name="HTTP" class="com.kbds.pay.appender.HttpAppender">-->
-<!--        <encoder>-->
-<!--            <pattern>${KAFKA_LOG_PATTERN}</pattern>-->
-<!--            <charset>utf8</charset>-->
-<!--        </encoder>-->
-<!--        <host>http://localhost:8080</host>-->
-<!--        <url>/logger/appender</url>-->
-<!--    </appender>-->
-    <appender name="S3Appender" class="com.kbds.pay.appender.S3Appender">
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-        <accessKey>AKIAYUI3YMRHAASDKHH3</accessKey>
-        <secretKey>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</secretKey>
-        <bucketName>dev-pay-tru01</bucketName>
-    </appender>
-
     <!-- Layout 1  :  kafkaAppender -->
-<!--    <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">-->
-<!--        <encoder class="com.github.danielwegener.logback.kafka.encoding.LayoutKafkaMessageEncoder">-->
-<!--            <layout class="ch.qos.logback.classic.PatternLayout">-->
-<!--                <Pattern>${KAFKA_LOG_PATTERN}</Pattern>-->
-<!--            </layout>-->
-<!--        </encoder>-->
-<!--        <topic>pay-logger</topic>-->
-<!--        <producerConfig>bootstrap.servers=localhost:9092</producerConfig>-->
-<!--    </appender>-->
-
-    <!-- Async 한 KafkaAppender 추가 -->
-<!--    <appender name="KAFKA-ASYNC" class="ch.qos.logback.classic.AsyncAppender">-->
-<!--        <appender-ref ref="kafkaAppender"/>-->
-<!--    </appender>-->
-    <logger name="s3-logger" level="INFO" additive="false" >
-        <appender-ref ref="S3Appender"/>
-    </logger>
+    <appender name="KAFKA" class="com.kbds.pay.appender.KafkaAppender">
+        <topic>pay-logger</topic>
+        <bootstrapServers>localhost:9092</bootstrapServers>
+    </appender>
 
     <!-- Root Logger -->
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
-<!--        <appender-ref ref="KAFKA-ASYNC" />-->
-<!--        <appender-ref ref="KAFKA" />-->
+        <appender-ref ref="KAFKA" />
     </root>
 </configuration>

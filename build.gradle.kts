@@ -15,22 +15,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("software.amazon.awssdk:s3:2.20.0")
-
-    implementation("jakarta.json:jakarta.json-api:2.0.1")
 
     // Kafka library
-    implementation("org.apache.kafka:kafka-clients:3.9.2")
+    implementation("org.springframework.kafka:spring-kafka")
 
     // ElasticSearch Java API
     implementation("co.elastic.clients:elasticsearch-java:8.12.2")
-    implementation("org.elasticsearch.client:elasticsearch-rest-client:8.12.2")
 
     // apache common
     implementation("org.apache.commons:commons-lang3:3.18.0")
-
-    // Http Appender for Logback
-    implementation("net.logstash.logback:logstash-logback-encoder:7.2")
 
     // 개발 편의를 위한 Lombok (선택 사항)
     compileOnly("org.projectlombok:lombok")

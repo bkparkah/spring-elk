@@ -1,4 +1,3 @@
-version: '1'
 services:
   es8:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2    
@@ -12,8 +11,6 @@ services:
       - xpack.security.enrollment.enabled=false
     ports:
       - 9200:9200
-    networks:
-      - elk_network
     deploy:
       resources:
         limits:
@@ -28,14 +25,7 @@ services:
     environment:
       LS_JAVA_OPTS: -Xms256m -Xmx256m
     volumes:
-      # Mount local pipeline directory into container
       - ./logstash/pipeline:/e/Workspace/server/logstash/logstash-9.3.2/config
-      # Mount local config file
-      - ./logstash/config/logstash.conf:/e/Workspace/server/logstash/logstash-9.3.2/config/logstash-elk-kafka.conf"
-    command: >
-      logstash -f ./logstash/config/logstash.conf
-    networks:
-      - elk_network
     depends_on:
       - es8
 
@@ -47,16 +37,10 @@ services:
     environment:
       - node.name=ki8
       - cluster.name=es8-cluster
-      - ELASTICSEARCH_HOSTS=http://es8:9200
-    networks:
-      - elk_network
+      - ELASTICSEARCH_HOSTS=http://localhost:9200
     deploy:
       resources:
         limits:
           memory: 2G
     depends_on:
       - es8
-
-networks:
-  elk_network: 
-    driver: bridge

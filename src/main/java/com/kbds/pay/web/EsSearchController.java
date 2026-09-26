@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/es/search")
+@RequestMapping("/es")
 @ConditionalOnBean(ElasticsearchClient.class)
 public class EsSearchController {
-    @Autowired
+
+    @Autowired(required = false)
     private EsService esService;
 
-    @PostMapping("/")
+    @PostMapping("/search")
     public Map<String, String> getIndexStat(@RequestBody Map<String, String> params, HttpServletRequest request, HttpServletResponse response) {
         String indexName = params.get("indexName");
         esService.getIndexStat(indexName);
