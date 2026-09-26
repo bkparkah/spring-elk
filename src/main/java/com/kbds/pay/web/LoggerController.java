@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping("/logger")
 public class LoggerController {
 
-    private static Logger logger = LoggerFactory.getLogger(LoggerController.class);
+    private static Logger logger = LoggerFactory.getLogger("kafka-logger");
 
     @PostConstruct
     public void init() {
