@@ -11,6 +11,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 public class KafkaAppender extends AppenderBase<ILoggingEvent>  {
@@ -24,8 +25,22 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent>  {
     @Override
     protected void append(ILoggingEvent eventObject) {
         Map<String, String> messageMap = new HashMap<>();
-        messageMap.put("ts", DateFormatUtils.format(eventObject.getTimeStamp() , "yyyy-MM-dd HH:mm:ss"));
+        messageMap.put("log_date", DateFormatUtils.format(eventObject.getTimeStamp() , "yyyy-MM-dd"));
+        messageMap.put("log_time", DateFormatUtils.format(eventObject.getTimeStamp() , "HH:mm:ss"));
+        messageMap.put("level", eventObject.getLevel().toString());
         messageMap.put("message", eventObject.getFormattedMessage());
+        StackTraceElement[] callerDElements= eventObject.getCallerData();
+        if( Objects.nonNull(callerDElements)) {
+            messageMap.put("class", callerDElements[0].getClassName());
+            messageMap.put("method",callerDElements[0].getMethodName());
+            messageMap.put("line", String.valueOf(callerDElements[0].getLineNumber()));
+        }
+        else {
+            messageMap.put("class","");
+            messageMap.put("method","");
+            messageMap.put("line","");
+        }
+
         try {
             producer.send(new ProducerRecord<>(topic, objectMapper.writeValueAsString(messageMap)));
         } catch (Exception e) {
